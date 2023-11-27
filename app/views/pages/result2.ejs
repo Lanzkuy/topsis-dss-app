@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Result</title>
+	</head>
+	<body>
+		
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<div class="page-content">
+					<section class="row">
+					  <div class="row" id="basic-table">
+						<div class="col-12 col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title" style="font-size: 35px;;">Matriks Ternormalisasi</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<!-- Table with outer spacing -->
+										<div class="table-responsive">
+											<table class="table table-lg" id="matriksTernormalisasiTable">
+												<thead>
+													<tr>
+													  <th>Kriteria</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-md-12">
+							  <div class="card">
+								  <div class="card-header">
+									  <h4 class="card-title" style="font-size: 35px;;">Matriks Ternormalisasi Dengan Bobot</h4>
+								  </div>
+								  <div class="card-content">
+									  <div class="card-body">
+										  <!-- Table with outer spacing -->
+										  <div class="table-responsive">
+											  <table class="table table-lg" id="matriksTernormalisasiBobotTable">
+												  <thead>
+													  <tr>
+														<th>Kriteria</th>
+													  </tr>
+												  </thead>
+												  <tbody>
+												  </tbody>
+											  </table>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+							</div>
+							<div class="col-12 col-md-12">
+							  <div class="card">
+								  <div class="card-header">
+									  <h4 class="card-title" style="font-size: 35px;;">Solusi Ideal</h4>
+								  </div>
+								  <div class="card-content">
+									  <div class="card-body">
+										  <!-- Table with outer spacing -->
+										  <div class="table-responsive">
+											  <table class="table table-lg" id="solusiIdealTable">
+												  <thead>
+													  <tr>
+														<th>Kriteria</th>
+														<th>Ideal Positif</th>
+														<th>Ideal Negatif</th>
+													  </tr>
+												  </thead>
+												  <tbody>
+												  </tbody>
+											  </table>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+							  <div class="col-12 col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title" style="font-size: 35px;;">Jarak Solusi Ideal</h4>
+									</div>
+									<div class="card-content">
+										<div class="card-body">
+											<!-- Table with outer spacing -->
+											<div class="table-responsive">
+												<table class="table table-lg" id="jarakSolusiTable">
+													<thead>
+														<tr>
+														  <th>Alternatif</th>
+														  <th>Jarak Solusi Ideal Positif</th>
+														  <th>Jarak Solusi Ideal Negatif</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-12">
+								  <div class="card">
+									  <div class="card-header">
+										  <h4 class="card-title" style="font-size: 35px;;">Nilai Preferensi Alternatif</h4>
+									  </div>
+									  <div class="card-content">
+										  <div class="card-body">
+											  <!-- Table with outer spacing -->
+											  <div class="table-responsive">
+												  <table class="table table-lg" id="preferensiTable">
+													  <thead>
+														  <tr>
+															<th>Alternatif</th>
+															<th>Nilai Preferensi</th>
+														  </tr>
+													  </thead>
+													  <tbody>
+													  </tbody>
+												  </table>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+								  <div class="col-12 col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="card-title" style="font-size: 35px;;">Alternatif Yang Terpilih</h4>
+										</div>
+										<div class="card-content">
+											<div class="card-body">
+												<!-- Table with outer spacing -->
+												<div class="table-responsive">
+													<table class="table table-lg" id="alternatifTerpilih">
+														<thead>
+															<tr>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+					</section>
+				  </div>    
+			</main>
+		</div>
+		
+		<%-include('../partials/footer')%>
+		<script>function topsis() {
+			// Alternatif
+			const alternatif = ["HP OMEN 15-DC1111TX", "ACER NITRO 5 AN515-58-78PT", "Asus TUF DASH FX517ZC", "Lenovo Gaming Legion 5-15IMH05 9KID"];
+		  
+			// Kriteria (beserta bobot dan data)
+			const kriteria = [
+			  { nama: "RAM", bobot: 5, data: [16, 16, 16, 16] },
+			  { nama: "ROM", bobot: 5, data: [1256, 512, 512, 512] },
+			  { nama: "Layar", bobot: 3, data: [15.6, 15.6, 15.6, 15.6] },
+			  { nama: "Berat", bobot: 2, data: [2300, 2600, 2000, 2500] },
+			  { nama: "Harga", bobot: 3, data: [18999, 16999, 15999, 19999] },
+			  { nama: "Processor", bobot: 5, data: [11016, 26594, 24014, 12089] },
+			  { nama: "VGA", bobot: 5, data: [10072, 9365, 9365, 7542] },
+			  { nama: "Tahun", bobot: 2, data: [2019, 2022, 2022, 2020] }
+			];
+		  
+			// Step 1: Mencari matriks ternormalisasi
+			const matriksTernormalisasi = [];
+			for (let i = 0; i < kriteria.length; i++) {
+			  const kriteriaData = kriteria[i].data;
+			  const sumSquares = kriteriaData.reduce((sum, val) => sum + Math.pow(val, 2), 0);
+			  const sqrtSumSquares = Math.sqrt(sumSquares);
+		  
+			  const normalizedData = kriteriaData.map(val => val / sqrtSumSquares);
+			  matriksTernormalisasi.push(normalizedData);
+			}
+		  
+			// Step 2: Mengalikan bobot dengan matriks ternormalisasi
+			const matriksTernormalisasiBobot = [];
+			for (let i = 0; i < matriksTernormalisasi.length; i++) {
+			  const kriteriaBobot = kriteria[i].bobot;
+			  const ternormalisasi = matriksTernormalisasi[i];
+			  const ternormalisasiBobot = ternormalisasi.map(val => val * kriteriaBobot);
+			  matriksTernormalisasiBobot.push(ternormalisasiBobot);
+			}
+		  
+			// Step 3: Mencari solusi ideal positif dan negatif
+			const idealPositif = matriksTernormalisasiBobot.map(column => Math.max(...column));
+			const idealNegatif = matriksTernormalisasiBobot.map(column => Math.min(...column));
+		  
+			// Step 4: Mencari jarak solusi ideal positif dan negatif untuk setiap alternatif
+			const jarakPositif = [];
+			const jarakNegatif = [];
+			for (let i = 0; i < alternatif.length; i++) {
+			  let sumSquaresPositif = 0;
+			  let sumSquaresNegatif = 0;
+			  for (let j = 0; j < kriteria.length; j++) {
+				sumSquaresPositif += Math.pow(matriksTernormalisasiBobot[j][i] - idealNegatif[j], 2);
+				sumSquaresNegatif += Math.pow(matriksTernormalisasiBobot[j][i] - idealPositif[j], 2);
+			  }
+			  jarakPositif.push(Math.sqrt(sumSquaresPositif));
+			  jarakNegatif.push(Math.sqrt(sumSquaresNegatif));
+			}
+		  
+			// Step 5: Mencari nilai preferensi
+			const preferensi = [];
+			for (let i = 0; i < alternatif.length; i++) {
+			  const preferensiValue = jarakNegatif[i] / (jarakPositif[i] + jarakNegatif[i]);
+			  preferensi.push(preferensiValue);
+			}
+			
+			// Step 6: Memilih alternatif dengan nilai preferensi tertinggi
+			const maxPreferensi = Math.max(...preferensi);
+			const indexMaxPreferensi = preferensi.indexOf(maxPreferensi);
+			const alternatifTerpilih = alternatif[indexMaxPreferensi];
+		  
+			// Menampilkan hasil
+			const matriksTernormalisasiTable = document.getElementById('matriksTernormalisasiTable');
+			const matriksTernormalisasiBobotTable = document.getElementById('matriksTernormalisasiBobotTable');
+			const solusiIdealTable = document.getElementById('solusiIdealTable');
+			const jarakSolusiTable = document.getElementById('jarakSolusiTable');
+			const preferensiTable = document.getElementById('preferensiTable');
+			const alternatifTerpilihElem = document.getElementById('alternatifTerpilih');
+		  
+			// Tampilkan data matriks ternormalisasi
+			for (let i = 0; i < kriteria.length; i++) {
+			  const row = matriksTernormalisasiTable.insertRow();
+			  const namaKriteriaCell = row.insertCell(0);
+			  namaKriteriaCell.textContent = kriteria[i].nama;
+		  
+			  for (let j = 0; j < alternatif.length; j++) {
+				const cell = row.insertCell(j + 1);
+				cell.textContent = matriksTernormalisasi[i][j].toFixed(2);
+			  }
+			}
+		  
+			// Tampilkan data matriks ternormalisasi x bobot
+			for (let i = 0; i < kriteria.length; i++) {
+			  const row = matriksTernormalisasiBobotTable.insertRow();
+			  const namaKriteriaCell = row.insertCell(0);
+			  namaKriteriaCell.textContent = kriteria[i].nama;
+		  
+			  for (let j = 0; j < alternatif.length; j++) {
+				const cell = row.insertCell(j + 1);
+				cell.textContent = matriksTernormalisasiBobot[i][j].toFixed(2);
+			  }
+			}
+		  
+			// Tampilkan data solusi ideal positif dan negatif
+			for (let i = 0; i < kriteria.length; i++) {
+			  const row = solusiIdealTable.insertRow();
+			  const namaKriteriaCell = row.insertCell(0);
+			  namaKriteriaCell.textContent = kriteria[i].nama;
+		  
+			  const idealPositifCell = row.insertCell(1);
+			  idealPositifCell.textContent = idealPositif[i].toFixed(2);
+		  
+			  const idealNegatifCell = row.insertCell(2);
+			  idealNegatifCell.textContent = idealNegatif[i].toFixed(2);
+			}
+		  
+			// Tampilkan data jarak solusi ideal
+			for (let i = 0; i < alternatif.length; i++) {
+			  const row = jarakSolusiTable.insertRow();
+			  const alternatifCell = row.insertCell(0);
+			  alternatifCell.textContent = alternatif[i];
+		  
+			  const jarakPositifCell = row.insertCell(1);
+			  jarakPositifCell.textContent = jarakPositif[i].toFixed(2);
+		  
+			  const jarakNegatifCell = row.insertCell(2);
+			  jarakNegatifCell.textContent = jarakNegatif[i].toFixed(2);
+			}
+		  
+			// Tampilkan data nilai preferensi
+			for (let i = 0; i < alternatif.length; i++) {
+			  const row = preferensiTable.insertRow();
+			  const alternatifCell = row.insertCell(0);
+			  alternatifCell.textContent = alternatif[i];
+		  
+			  const preferensiCell = row.insertCell(1);
+			  preferensiCell.textContent = preferensi[i].toFixed(4);
+			}
+		  
+			// Tampilkan alternatif terpilih
+			alternatifTerpilihElem.textContent = alternatifTerpilih;
+		  }
+		  
+		  topsis();
+		  </script>
+	</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Result</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Matriks Keputusan</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<% data.criteria.forEach(criteria => { %>
+									<th><%= criteria.dataValues.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let x = 0; x < data.alternative.length; x++ ) {%>
+								<tr>
+									<td><%= data.alternative[x].name %></td>
+									<%for( let y = 0; y < data.alternativeCriteria.length; y++ )
+									{%> <%if(data.alternativeCriteria[y].alternative.id ==
+									data.alternative[x].id) { %>
+									<td>
+										<%= data.alternativeCriteria[y].criteria_value.value %>
+									</td>
+									<% }} %>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Bobot Kriteria</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<% data.criteria.forEach(criteria => { %>
+									<th><%= criteria.dataValues.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<% data.criteria.forEach(criteria => { %>
+									<td><%= criteria.dataValues.weight %></td>
+									<% }) %>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Matriks Normalisasi (R)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<% data.criteria.forEach(criteria => { %>
+									<th><%= criteria.dataValues.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let x = 0; x < data.alternative.length; x++ ) {%>
+								<tr>
+									<td><%= data.alternative[x].name %></td>
+									<% normalizeMatrix[x].forEach(matrix => { %>
+									<td><%= matrix %></td>
+									<% }) %>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Matriks Normalize x Weight
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<% data.criteria.forEach(criteria => { %>
+									<th><%= criteria.dataValues.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let x = 0; x < data.alternative.length; x++ ) {%>
+								<tr>
+									<td><%= data.alternative[x].name %></td>
+									<% normalizeXWeightMatrix[x].forEach(matrix => { %>
+									<td><%= matrix %></td>
+									<% }) %>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Solusi Ideal Positif (A+)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<% data.criteria.forEach(criteria => { %>
+									<th><%= criteria.dataValues.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<%for(let x = 0; x < idealPositive.length; x++ ) {%>
+									<td><%= idealPositive[x] %></td>
+									<% } %>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Solusi Ideal Negatif (A-)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<% data.criteria.forEach(criteria => { %>
+									<th><%= criteria.dataValues.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<%for(let x = 0; x < idealNegative.length; x++ ) {%>
+									<td><%= idealNegative[x] %></td>
+									<% } %>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Ideal Positive (A+)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Scale</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let x = 0; x < data.alternative.length; x++ ) {%>
+								<tr>
+									<td><%= data.alternative[x].name %></td>
+									<td><%= scaleSolution.positive[x] %></td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Ideal Negative (A-)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Scale</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let x = 0; x < data.alternative.length; x++ ) {%>
+								<tr>
+									<td><%= data.alternative[x].name %></td>
+									<td><%= scaleSolution.negative[x] %></td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Preference</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Alternative</th>
+									<th>Nilai</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let x = 0; x < data.alternative.length; x++ ) {%>
+								<tr>
+									<td><%= data.alternative[x].name %></td>
+									<td><%= preference[x] %></td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+		<%-include('../partials/footer')%>
+	</body>
+</html>

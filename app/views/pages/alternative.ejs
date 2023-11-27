@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Alternative</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Alternative Data</div>
+							<div class="ml-auto d-none d-md-block">
+								<button
+									class="btn btn-primary"
+									data-bs-toggle="modal"
+									data-bs-target="#addModal"
+								>
+									Add Alternative
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped" id="table1">
+							<thead>
+								<tr>
+									<th width="80%">Name</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% data.forEach(alternative => { %>
+								<tr>
+									<td width="80%"><%= alternative.name %></td>
+									<td>
+										<button
+											class="btn btn-warning btn-sm btn-edit"
+											data-alternative="<%= JSON.stringify(alternative) %>"
+										>
+											<i class="bi bi-pencil-fill"></i>
+										</button>
+										<a
+											href="/alternative/delete/<%= alternative.id %>"
+											class="btn btn-danger btn-sm btn-delete"
+										>
+											<i class="bi bi-trash"></i>
+										</a>
+									</td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+		<div
+			class="modal fade"
+			id="addModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="addModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addModalLabel">Add Alternative</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form method="post" action="/alternative/create">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input
+									type="text"
+									class="form-control"
+									id="name"
+									name="name"
+									required
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="editModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="editModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel">Edit Alternative</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form id="editForm">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input
+									type="text"
+									class="form-control"
+									id="editName"
+									name="name"
+									required
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnEditSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%-include('../partials/footer')%>
+		<script src="/js/pages/alternative.js"></script>
+	</body>
+</html>

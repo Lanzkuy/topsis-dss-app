@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Users</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">User Data</div>
+							<div class="ml-auto d-none d-md-block">
+								<button
+									class="btn btn-primary"
+									data-bs-toggle="modal"
+									data-bs-target="#addModal"
+								>
+									Add User
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped" id="table1">
+							<thead>
+								<tr>
+									<th>Username</th>
+									<th>Email</th>
+									<th>Name</th>
+									<th>Role</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% data.forEach(user => { %>
+								<tr>
+									<td><%= user.username %></td>
+									<td><%= user.email %></td>
+									<td><%= user.name %></td>
+									<td><%= user.role %></td>
+									<td>
+										<button
+											class="btn btn-warning btn-sm btn-edit"
+											data-user="<%= JSON.stringify(user) %>"
+										>
+											<i class="bi bi-pencil-fill"></i>
+										</button>
+										<a
+											href="/user/delete/<%= user.id %>"
+											class="btn btn-danger btn-sm btn-delete"
+										>
+											<i class="bi bi-trash"></i>
+										</a>
+									</td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<div
+			class="modal fade"
+			id="addModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="addModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addModalLabel">Add User</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form method="post" action="/user/create">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input
+									type="text"
+									class="form-control"
+									id="username"
+									name="username"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input
+									type="password"
+									class="form-control"
+									id="password"
+									name="password"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input
+									type="email"
+									class="form-control"
+									id="email"
+									name="email"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input
+									type="name"
+									class="form-control"
+									id="name"
+									name="name"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="name">Role</label>
+								<select class="form-select" id="role" name="role" required>
+									<option value="admin">Admin</option>
+									<option value="user">User</option>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="editModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="editModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel">Edit User</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form id="editForm">
+						<div class="modal-body">
+							<input
+								type="hidden"
+								class="form-control"
+								id="editLastUsername"
+								name="lastUsername"
+								required
+							/>
+							<div class="form-group">
+								<label for="editUsername">Username</label>
+								<input
+									type="text"
+									class="form-control"
+									id="editUsername"
+									name="username"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="editPassword">Password</label>
+								<input
+									type="password"
+									class="form-control"
+									id="editPassword"
+									name="password"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="editEmail">Email</label>
+								<input
+									type="email"
+									class="form-control"
+									id="editEmail"
+									name="email"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="editName">Name</label>
+								<input
+									type="text"
+									class="form-control"
+									id="editName"
+									name="name"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="editRole">Role</label>
+								<select class="form-select" id="editRole" name="role" required>
+									<option value="admin">Admin</option>
+									<option value="user">User</option>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnEditSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%-include('../partials/footer')%>
+		<script src="/js/pages/user.js"></script>
+	</body>
+</html>

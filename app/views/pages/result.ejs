@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Result</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Decision Matrix</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<% criteria.forEach(item => { %>
+									<th><%= item.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<% alternativeCriteria.forEach(item => { %>
+								<tr>
+									<td><%= item.name %></td>
+									<% item.values.forEach(value => { %>
+									<td><%= value.criteriaValue.value %></td>
+									<% }) %>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Weight Criteria</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<% criteria.forEach(item => { %>
+									<th><%= item.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<% criteria.forEach(item => { %>
+									<td><%= item.weight %></td>
+									<% }) %>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Normalized Matrix</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<% criteria.forEach(item => { %>
+									<th><%= item.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<% for(let i = 0; i < alternativeCriteria.length; i++) {%>
+								<tr>
+									<td><%= alternativeCriteria[i].name %></td>
+									<% normalizedMatrix[i].forEach(matrix => { %>
+									<td><%= matrix %></td>
+									<% }) %>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Weighted Normalized Decision Matrix
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<% criteria.forEach(item => { %>
+									<th><%= item.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<% for(let i = 0; i < alternativeCriteria.length; i++) {%>
+								<tr>
+									<td><%= alternativeCriteria[i].name %></td>
+									<% weightedNormalizedMatrix[i].forEach(matrix => { %>
+									<td><%= matrix %></td>
+									<% }) %>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Positive Ideal Solution
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<% criteria.forEach(item => { %>
+									<th><%= item.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<% idealPositive.forEach((value) => { %>
+									<td><%= value %></td>
+									<% }) %>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Negative Ideal Solution
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<% criteria.forEach(item => { %>
+									<th><%= item.code %></th>
+									<% }) %>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<% idealNegative.forEach((value) => { %>
+									<td><%= value %></td>
+									<% }) %>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Euclidean Distance (Ideal Positive)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let i = 0; i < alternativeCriteria.length; i++ ) {%>
+								<tr>
+									<td><%= alternativeCriteria[i].name %></td>
+									<td><%= euclideanDistance.positive[i] %></td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								Euclidean Distance (Ideal Negative)
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let i = 0; i < alternativeCriteria.length; i++ ) {%>
+								<tr>
+									<td><%= alternativeCriteria[i].name %></td>
+									<td><%= euclideanDistance.negative[i] %></td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Preference</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Alternative</th>
+									<th>Nilai</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%for(let i = 0; i < alternativeCriteria.length; i++ ) {%>
+								<tr>
+									<td><%= preference[i].name %></td>
+									<td><%= preference[i].value %></td>
+								</tr>
+								<% } %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+		<%-include('../partials/footer')%>
+	</body>
+</html>

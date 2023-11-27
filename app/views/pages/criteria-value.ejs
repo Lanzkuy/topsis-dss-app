@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Criteria</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%> <% if(data == '') {%>
+				<p class="mb-0">No data available</p>
+				<% } else { data.forEach(criteria => { %>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">
+								<%= criteria.name %>
+							</div>
+							<div class="ml-auto d-none d-md-block">
+								<button
+									class="btn btn-primary btn-add"
+									data-criteria="<%= JSON.stringify(criteria) %>"
+								>
+									Add Value
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th width="80%">Value</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% criteria.values.forEach(criteria_value => {
+								if(criteria_value.criteria_id == criteria.id) { %>
+								<tr>
+									<td width="80%"><%= criteria_value.value %></td>
+									<td>
+										<button
+											class="btn btn-warning btn-sm btn-edit"
+											data-criteria-value="<%= JSON.stringify(criteria_value) %>"
+										>
+											<i class="bi bi-pencil-fill"></i>
+										</button>
+										<a
+											href="/criteria/value/delete/<%= criteria_value.id %>"
+											class="btn btn-danger btn-sm btn-delete"
+										>
+											<i class="bi bi-trash"></i>
+										</a>
+									</td>
+								</tr>
+								<% }}) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<% })} %>
+			</main>
+		</div>
+
+		<div
+			class="modal fade"
+			id="addModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="addModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addModalLabel">Add Value</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form id="addForm">
+						<div class="modal-body">
+							<input
+								type="hidden"
+								class="form-control"
+								id="criteria_id"
+								name="criteria_id"
+								required
+							/>
+							<div class="form-group">
+								<label for="code">Value</label>
+								<input
+									type="number"
+									class="form-control"
+									id="value"
+									name="value"
+									step="0.01"
+									required
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="editModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="editModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel">Edit Value</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form id="editForm">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="editValue">Value</label>
+								<input
+									type="number"
+									class="form-control"
+									id="editValue"
+									name="value"
+									step="0.01"
+									required
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnEditSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%-include('../partials/footer')%>
+		<script src="/js/pages/criteria-value.js"></script>
+	</body>
+</html>

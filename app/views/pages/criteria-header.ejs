@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Criteria</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<p>Benchmark Processor and VGA</p>
+				<p>
+					<a href="https://www.cpubenchmark.net/cpu_list.php">CPU BENCHMARK</a>
+				</p>
+				<p>
+					<a href="https://www.videocardbenchmark.net/gpu_list.php"
+						>VGA BENCHMARK</a
+					>
+				</p>
+				<div class="card mt-4">
+					<div class="card-header">
+						<div class="d-flex justify-content-end">
+							<div class="flex-grow-1 d-none d-md-block">Criteria Data</div>
+							<div class="ml-auto d-none d-md-block">
+								<button
+									class="btn btn-primary"
+									data-bs-toggle="modal"
+									data-bs-target="#addModal"
+								>
+									Add Criteria
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-striped" id="table1">
+							<thead>
+								<tr>
+									<th>Code</th>
+									<th>Name</th>
+									<th>Weight</th>
+									<th>Type</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% data.forEach(criteria => { %>
+								<tr>
+									<td><%= criteria.code %></td>
+									<td><%= criteria.name %></td>
+									<td><%= criteria.weight %></td>
+									<td><%= criteria.type %></td>
+									<td>
+										<button
+											class="btn btn-warning btn-sm btn-edit"
+											data-criteria="<%= JSON.stringify(criteria) %>"
+										>
+											<i class="bi bi-pencil-fill"></i>
+										</button>
+										<a
+											href="/criteria/header/delete/<%= criteria.id %>"
+											class="btn btn-danger btn-sm btn-delete"
+										>
+											<i class="bi bi-trash"></i>
+										</a>
+									</td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<div
+			class="modal fade"
+			id="addModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="addModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addModalLabel">Add Criteria</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form method="post" action="/criteria/header/create">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="code">Code</label>
+								<input
+									type="text"
+									class="form-control"
+									id="code"
+									name="code"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input
+									type="text"
+									class="form-control"
+									id="name"
+									name="name"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="weight">Weight</label>
+								<input
+									type="number"
+									class="form-control"
+									id="weight"
+									name="weight"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="name">Type</label>
+								<select class="form-select" id="type" name="type" required>
+									<option value="cost">Cost</option>
+									<option value="benefit">Benefit</option>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="editModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="editModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel">Edit Criteria</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form id="editForm">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="code">Code</label>
+								<input
+									type="text"
+									class="form-control"
+									id="editCode"
+									name="code"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input
+									type="text"
+									class="form-control"
+									id="editName"
+									name="name"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="weight">Weight</label>
+								<input
+									type="number"
+									class="form-control"
+									id="editWeight"
+									name="weight"
+									required
+								/>
+							</div>
+							<div class="form-group">
+								<label for="editType">Type</label>
+								<select class="form-select" id="editType" name="type" required>
+									<option value="Cost">Cost</option>
+									<option value="Benefit">Benefit</option>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnEditSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%-include('../partials/footer')%>
+		<script src="/js/pages/criteria-header.js"></script>
+	</body>
+</html>

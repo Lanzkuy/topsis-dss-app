@@ -1,0 +1,45 @@
+{
+	"name": "topsis-dss-app",
+	"version": "1.0.0",
+	"description": "DSS App",
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"main": "Server.js",
+	"scripts": {
+		"start": "node app/Server.js",
+		"start:development": "nodemon app/Server.js",
+		"migrate": "npx sequelize db:migrate",
+		"migrate:undo": "npx sequelize db:migrate:undo",
+		"migrate:undo:all": "npx sequelize db:migrate:undo:all",
+		"migrate:status": "npx sequelize db:migrate:status"
+	},
+	"dependencies": {
+		"body-parser": "^1.20.2",
+		"cookie-parser": "^1.4.6",
+		"dotenv": "^16.3.1",
+		"ejs": "^3.1.9",
+		"express": "^4.18.2",
+		"express-flash": "^0.0.2",
+		"express-session": "^1.17.3",
+		"express-validator": "^7.0.1",
+		"mysql2": "^3.4.0",
+		"sequelize": "^6.32.1",
+		"sequelize-cli": "^6.6.1"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.22"
+	},
+	"imports": {
+		"#config/*": "./config/*.js",
+		"#controllers/*": "./app/controllers/*.js",
+		"#exceptions/*": "./app/exceptions/*.js",
+		"#middlewares/*": "./app/middlewares/*.js",
+		"#models/*": "./app/models/*.js",
+		"#repositories/*": "./app/repositories/*.js",
+		"#routes/*": "./app/routes/*.js",
+		"#utils/*": "./app/utils/*.js",
+		"#validations/*": "./app/validations/*.js",
+		"#views/*": "./app/views/*.js"
+	}
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include('../partials/head') %>
+		<title>DSS App - Sign In</title>
+		<link rel="stylesheet" href="/css/pages/auth.css" />
+	</head>
+	<body>
+		<div class="wrapper col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+			<form class="login-form bg-white p-5" method="post" action="signin">
+				<div class="mb-4">
+					<h1 class="fw-bolder fs-4">SIGN IN</h1>
+					<p>Please sign in to continue</p>
+				</div>
+				<div class="mb-3">
+					<label for="username" class="form-label">Username</label>
+					<input
+						type="text"
+						class="form-control"
+						id="username"
+						name="username"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label">Password</label>
+					<input
+						type="password"
+						class="form-control"
+						id="password"
+						name="password"
+					/>
+				</div>
+				<input
+					type="submit"
+					class="my-3 btn btn-primary btn-block btn-md shadow-md"
+					id="btnSignIn"
+					value="Sign In"
+				/>
+				<div class="row text-center">
+					<p>
+						Don't have an account?
+						<a href="/auth/signup" class="text-decoration-none">Sign Up</a>
+					</p>
+				</div>
+			</form>
+		</div>
+		<%- include('../partials/footer') %>
+	</body>
+</html>

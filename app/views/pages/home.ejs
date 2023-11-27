@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Home</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<header class="mb-3">
+					<a href="#" class="burger-btn d-block d-xl-none">
+						<i class="bi bi-justify fs-3"></i>
+					</a>
+				</header>
+
+				<div class="page-heading">
+					<h3>Cara Kerja Aplikasi</h3>
+				</div>
+				<div class="page-content">
+					<div class="card">
+						<div
+							class="card-header"
+							data-toggle="collapse"
+							role="button"
+							href="#collapseContent1"
+						>
+							Step 1
+							<h4 class="mt-3">Input Data</h4>
+						</div>
+						<div class="collapse" id="collapseContent1">
+							<div class="card-body">
+								<h4>Input Data</h4>
+								<p>
+									Metode TOPSIS (Technique for Order Preference by Similarity to
+									Ideal Solution) adalah salah satu metode pengambilan keputusan
+									multi-kriteria yang digunakan untuk memilih alternatif terbaik
+									dari sejumlah alternatif berdasarkan beberapa kriteria yang
+									telah ditentukan.
+								</p>
+								<p>
+									Siapkan data yang diperlukan! Pada perhitungan topsis
+									dibutuhkan Data Alternatif dan Data Kriteria. Data tersebut
+									diinput pada halaman yang sudah disediakan beserta bobot pada
+									masing kriteria
+								</p>
+								<p>Berikut adalah contoh data alternatif dan kriteria</p>
+
+								<img
+									src="assets/images/Screenshot 2023-07-24 084745.png"
+									alt=""
+									srcset=""
+								/>
+
+								<p>
+									Berikut adalah petunjuk skala bobot dari 1 sampai dengan 5
+								</p>
+								<ul>
+									<li>5 = Prioritas Utama</li>
+									<li>4 = Sangat Penting</li>
+									<li>3 = Penting</li>
+									<li>2 = Dipertimbangkan</li>
+									<li>1 = Tidak terlalu Penting</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div
+							class="card-header"
+							data-toggle="collapse"
+							role="button"
+							href="#collapseContent2"
+						>
+							Step 2
+							<h4 class="mt-3">Normalisasi</h4>
+						</div>
+						<div class="collapse" id="collapseContent2">
+							<div class="card-body">
+								<h4>Normalisasi</h4>
+								<img
+									src="https://1.bp.blogspot.com/-Oc1FB0eVIKY/VeFKee1-PsI/AAAAAAAAAS0/y_1ExjbfQOw/s1600/t2.png"
+									alt=""
+									srcset=""
+								/>
+								<p>
+									Normalisasi dalam metode TOPSIS adalah salah satu langkah
+									penting dalam proses pengambilan keputusan multi-kriteria.
+									Normalisasi bertujuan untuk mengubah data kriteria dari skala
+									aslinya ke dalam skala yang seragam, sehingga memungkinkan
+									perbandingan yang adil antara kriteria dengan bobot yang
+									berbeda.
+								</p>
+								<p>beriku adalah contoh hasil perhitungan yang sudah diinput</p>
+								<img
+									src="assets/images/perhitungan ternormalisasi.png"
+									alt=""
+									srcset=""
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div
+							class="card-header"
+							data-toggle="collapse"
+							role="button"
+							href="#collapseContent3"
+						>
+							Step 3
+							<h4 class="mt-3">Normalisasi x Weight (Bobot)</h4>
+						</div>
+						<div class="collapse" id="collapseContent3">
+							<div class="card-body">
+								<p>
+									Setelah matriks dinormalisasi, lalu akan dikalikan dengan
+									bobot masing-masing kriteria yang sudah diinput sebelumnya
+								</p>
+								<p>
+									Berikut adalah contoh output dari matriks ternormalisasi yang
+									telah dikalikan dengan bobot kriteria
+								</p>
+								<img
+									src="assets/images/normalisasi x bobot.png"
+									alt=""
+									srcset=""
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div
+							class="card-header"
+							data-toggle="collapse"
+							role="button"
+							href="#collapseContent4"
+						>
+							Step 4
+							<h4 class="mt-3">Penentuan Solusi Ideal Positif dan Negatif</h4>
+						</div>
+						<div class="collapse" id="collapseContent4">
+							<div class="card-body">
+								<p>
+									Tentukan solusi ideal positif (A+) dan solusi ideal negatif
+									(A-)berdasarkan nilai matriks rating terbobot pada langkah
+									ke-3. Berikut persamaan yang digunakan untuk mencari nilai
+									solusi ideal positif dan nilai solusi ideal negatif
+								</p>
+								<img
+									src="http://4.bp.blogspot.com/-7F3tT737vW4/VeFK2DMukFI/AAAAAAAAAS8/zaYLkeHPgj4/s400/t4.png"
+									alt=""
+									srcset=""
+								/>
+
+								<p>Berikut adalah contoh output dari penentuan solusi ideal</p>
+								<img
+									src="assets/images/Solusi Ideal Positif.png"
+									alt=""
+									srcset=""
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div
+							class="card-header"
+							data-toggle="collapse"
+							role="button"
+							href="#collapseContent5"
+						>
+							Step 5
+							<h4 class="mt-3">
+								Penentuan Jarak Solusi Ideal Positif dan Negatif
+							</h4>
+						</div>
+						<div class="collapse" id="collapseContent5">
+							<div class="card-body">
+								<p>
+									Tentukan jarak antara nilai terbobot setiap alternatif
+									terhadap solusi ideal positif dan solusi ideal negatifnya
+									.Untuk menentukan jarak antara nilai terbobot setiap
+									alternatif terhadap solusi ideal positif , digunakan persamaan
+									berikut
+								</p>
+								<img
+									src="http://3.bp.blogspot.com/-X2PdYWGqktU/VeFLJOyiv3I/AAAAAAAAATE/0IxPxZy-0rc/s200/d%252B.png"
+									alt=""
+									srcset=""
+								/>
+
+								<p>
+									Sedang untuk menghitung jarak antara nilai terbobot setiap
+									alternatif terhadap solusi ideal negatif , digunakan persamaan
+									berikut
+								</p>
+								<img
+									src="http://4.bp.blogspot.com/-libQ1oEgzhQ/VeFLaapf4tI/AAAAAAAAATM/JKs3UWtSljM/s200/d-.png"
+									alt=""
+									srcset=""
+								/>
+
+								<p>Berikut adalah contoh output dari penentuan solusi ideal</p>
+								<img
+									src="assets/images/Jarak Solusi Ideal.png"
+									alt=""
+									srcset=""
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div
+							class="card-header"
+							role="button"
+							data-toggle="collapse"
+							href="#collapseContent6"
+						>
+							Step 6
+							<h4 class="mt-3">Perhitungan Nilai Preferensi</h4>
+						</div>
+						<div class="collapse" id="collapseContent6">
+							<div class="card-body">
+								<img
+									src="http://1.bp.blogspot.com/-OxMMbaEsy0M/VeFLf04lBmI/AAAAAAAAATY/2cbRxlzybwI/s200/vi.png"
+									alt=""
+									srcset=""
+								/>
+								<p>
+									Setelah nilai preferensi dihitung, akan keluar output sebagai
+									berikut yang akan diambil nilai tertingginya sebagai hasil
+									dari perhitungan metode topsis
+								</p>
+								<p>beriku adalah contoh hasil perhitungan nilai preferensi</p>
+								<img
+									src="assets/images/Nilai preferensi.png"
+									alt=""
+									srcset=""
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<%-include('../partials/footer')%>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</body>
+</html>

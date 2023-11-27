@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Select Project</title>
+		<link rel="stylesheet" href="/css/pages/select-project.css" />
+	</head>
+	<body>
+		<div class="container mt-4">
+			<h2 class="text-center mb-4">Select Project</h2>
+			<div class="card">
+				<div class="card-header">
+					<div class="d-flex justify-content-end">
+						<div class="flex-grow-1 d-none d-md-block">
+							Select or Start a New Project
+						</div>
+						<div class="ml-auto d-none d-md-block">
+							<button
+								class="btn btn-primary"
+								data-bs-toggle="modal"
+								data-bs-target="#addModal"
+							>
+								Add Project
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-body text-center justify-space-between pb-5">
+					<% if(data == '') {%>
+					<p class="mb-0" id="noproject">No projects created yet.</p>
+					<% } else { data.forEach(project => { %>
+					<div class="d-flex align-items-center mt-4">
+						<a
+							class="item text-secondary flex-grow-1 align-self-center"
+							href="/select-project/select/<%= project.id %>"
+						>
+							<span class="item-text"><%= project.name %></span>
+						</a>
+						<div class="ms-2 align-self-center">
+							<a
+								href="/select-project/delete/<%= project.id %>"
+								class="btn btn-danger btn-delete"
+							>
+								<i class="bi bi-trash"></i>
+							</a>
+						</div>
+					</div>
+					<% }) } %>
+				</div>
+				<div class="card-footer text-center d-block d-md-none">
+					<button
+						class="btn btn-primary w-100"
+						data-bs-toggle="modal"
+						data-bs-target="#addModal"
+					>
+						Add Project
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="addModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="addModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addModalLabel">Add Project</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form method="post" action="/select-project/create">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="project_name">Project Name</label>
+								<input
+									type="text"
+									class="form-control"
+									id="project_name"
+									name="project_name"
+									required
+								/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%- include('../partials/footer') %>
+	</body>
+</html>

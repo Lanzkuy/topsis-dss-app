@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%-include('../partials/head')%>
+		<title>DSS App - Evaluation</title>
+	</head>
+	<body>
+		<div class="app">
+			<%-include('../components/navbar')%>
+			<main id="main">
+				<%-include('../components/nav-burger-button')%>
+				<%-include('../components/breadcrumb')%>
+				<div class="card mt-4">
+					<div class="card-body">
+						<table class="table table-striped" id="table1">
+							<thead>
+								<tr>
+									<th width="80%">Name</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% data.alternative.forEach(alternative => { %>
+								<tr>
+									<td width="80%"><%= alternative.dataValues.name %></td>
+									<td>
+										<button
+											class="btn btn-warning btn-sm btn-edit"
+											data-alternative="<%= JSON.stringify(alternative) %>"
+										>
+											<i class="bi bi-pencil-fill"></i> Edit
+										</button>
+									</td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+
+		<div
+			class="modal fade"
+			id="evaluationModal"
+			tabindex="-1"
+			role="dialog"
+			aria-labelledby="evaluationModalLabel"
+		>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="evaluationModalLabel">Evaluation</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<form method="POST" action="/evaluation/evaluate">
+						<div class="modal-body">
+							<input type="hidden" id="alternative_id" name="alternative_id" />
+							<% data.criteria.forEach(criteria => { %>
+							<div class="form-group">
+								<label for="criteria"><%= criteria.name %></label>
+								<select
+									class="form-select"
+									id="criteria_<%= criteria.id %>"
+									name="criteria_<%= criteria.id %>"
+									required
+								>
+									<% data.criteriaValue.forEach(criteriaValue => {
+									if(criteriaValue.criteria_id == criteria.id) {%>
+									<option value="<%= criteriaValue.id %>">
+										<%= criteriaValue.value %>
+									</option>
+									<% }}) %>
+								</select>
+							</div>
+							<% }) %>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%-include('../partials/footer')%>
+		<script src="/js/pages/evaluation.js"></script>
+	</body>
+</html>
